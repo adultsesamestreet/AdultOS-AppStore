@@ -1,0 +1,42 @@
+name: sportarr
+services:
+  sportarr:
+    image: ghcr.io/sportarr/sportarr:latest
+    container_name: sportarr
+    restart: unless-stopped
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+    ports:
+      - target: 7575
+        published: "7575"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Sports
+        target: /sports
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  architectures: [amd64, arm64]
+  main: sportarr
+  author: AdultOS AppStore
+  category: Media
+  developer: Sportarr
+  title: { en_US: Sportarr }
+  tagline:
+    en_US: Sports-event acquisition manager for league- and match-based libraries.
+  description:
+    en_US: |
+      Sportarr automates sports-event acquisition and metadata management similar to Sonarr/Radarr workflows, but focused on leagues, teams, and match events.
+
+      Best for: sports collection automation.
+      Pairs well with: Prowlarr, SABnzbd, qBittorrent-nox, Jellyfin.
+      Role: Optional.
+  port_map: "7575"
+  index: /

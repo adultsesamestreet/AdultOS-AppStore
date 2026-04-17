@@ -1,29 +1,12 @@
 [
-  {
-    "appid": "weknora"
-  },
-  {
-    "appid": "openclaw"
-  },
-  {
-    "appid": "teable"
-  },
-  {
-    "appid": "peanut"
-  },
-  {
-    "appid": "archivebox"
-  },
-  {
-    "appid": "ragflow"
-  },
-  {
-    "appid": "memos"
-  },
-  {
-    "appid": "immich"
-  },
-  {
-    "appid": "n8n"
-  }
+  { "appid": "tailscale" },
+  { "appid": "prowlarr" },
+  { "appid": "sabnzbd" },
+  { "appid": "qbittorrent_nox" },
+  { "appid": "whisparr" },
+  { "appid": "tpdb_namer" },
+  { "appid": "tinymediamanager_tpdb" },
+  { "appid": "stash" },
+  { "appid": "jellyfin" },
+  { "appid": "tunarr" }
 ]

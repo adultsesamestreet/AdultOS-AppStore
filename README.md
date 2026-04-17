@@ -1,36 +1,68 @@
-# CasaOS AppStore
+# AdultOS Curated App Store for CasaOS / ZimaOS
 
-[![GitHub issues by-label](https://img.shields.io/github/issues/IceWhaleTech/CasaOS-AppStore/help%20wanted?label=help%20wanted&style=for-the-badge)](https://github.com/IceWhaleTech/CasaOS-AppStore/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) [![GitHub contributors](https://img.shields.io/github/contributors/IceWhaleTech/CasaOS-AppStore?style=for-the-badge)](https://github.com/IceWhaleTech/CasaOS-AppStore/graphs/contributors)
+This repository is a curated Docker Compose app catalog for CasaOS and ZimaOS homelabs. It is designed for users who want a practical media pipeline focused on adult media acquisition, metadata enrichment, library management, pseudo-TV, playback, and supporting infrastructure.
 
-CasaOS AppStore needs your help to grow:
+## Who this store is for
 
-- See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute CasaOS Apps in Docker Compose format.
+- Homelab operators who prefer self-hosted media workflows.
+- CasaOS/ZimaOS users who want a coherent install path instead of disconnected app picks.
+- Users who need adult-oriented metadata and naming workflows while still supporting broad media, documents, and smart-home utilities.
 
-  **IMPORTANT**: Your PR must be *well tested* on your own CasaOS first. This is the mandatory first step for your submission.
+## Pipeline-first design
 
-- Check `help wanted` for which issues you can help with.
+This store follows a recommended stack progression:
 
-Thank you!
+**remote access / DNS / infrastructure → indexers → download clients → acquisition managers → renaming/metadata → library servers → request layer → pseudo-TV → file optimisation → sync / adjacent utilities**
 
-## 3-Party AppStores
+## Category structure
 
-CasaOS allows you to customize your device with a variety of third-party app stores. Below, you'll find a collection of third-party app store links that you can add to your CasaOS device to expand your app selection and enhance your user experience. 
+- **Core Library**: Stash, Jellyfin, Komga, Swing Music
+- **Acquisition**: Whisparr, Sonarr, Radarr, Lidarr, Sportarr, Prowlarr, SABnzbd, qBittorrent-nox, Deluge
+- **Requests / Discovery**: Jellyseerr
+- **Metadata & Renaming**: tinyMediaManager (TPDB Edition), TPDB Namer
+- **Channels & Live TV**: Tunarr (recommended), dizqueTV (optional)
+- **Automation & Optimisation**: Tdarr, Unmanic, FileFlows, Unpackerr, Syncthing
+- **Network & Access**: Tailscale, Pi-hole, AdGuard Home
+- **Home & Documents**: Home Assistant (Container), Paperless-ngx
 
-Simply copy the provided source link and add it to your CasaOS settings to access the corresponding app store.
+## Core vs optional
 
-- [Awesome Store list](https://awesome.casaos.io/content/3rd-party-app-stores/list.html)
+- **Core**: Whisparr, Stash, Jellyfin, tinyMediaManager (TPDB Edition), TPDB Namer, Tunarr, Prowlarr, SABnzbd/qBittorrent-nox
+- **Optional**: dizqueTV, Komga, Swing Music, Syncthing, Pi-hole, AdGuard Home
+- **Advanced**: Tdarr, Unmanic, FileFlows
+- **Infrastructure / Adjacent Utility**: Tailscale, Paperless-ngx, Home Assistant Container
 
-## Contributors
+## Recommended install order
 
-<a href="https://github.com/IceWhaleTech/CasaOS-AppStore/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=IceWhaleTech/CasaOS-AppStore" />
-</a>
+1. Tailscale
+2. Pi-hole **or** AdGuard Home
+3. Prowlarr
+4. SABnzbd and/or qBittorrent-nox
+5. Whisparr / Sonarr / Radarr / Lidarr / Sportarr
+6. TPDB Namer
+7. tinyMediaManager (TPDB Edition)
+8. Stash / Jellyfin / Komga / Swing Music
+9. Jellyseerr
+10. Tunarr
+11. Tdarr / Unmanic / FileFlows / Unpackerr
+12. Syncthing
+13. Paperless-ngx
+14. Home Assistant (Container)
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
+## tinyMediaManager (TPDB Edition)
 
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+This store includes a dedicated **tinyMediaManager (TPDB Edition)** entry with a custom image workflow intended for x86_64 deployments.
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+- TPDB plugin is bundled into `/app/addons` during image build/runtime initialization.
+- API key is intentionally left blank by default.
+- tinyMediaManager state persists under `/data`.
+- Media libraries should be mounted under `/media/...`.
+- First-run flow: `Settings → Movies → Scrapers → enable TPDB → paste API key`.
+
+## App catalog
+
+For curated positioning, tags, and relationship guidance (`Pairs well with`, `Best for`, role labels), see [`docs/APP_CATALOG.md`](docs/APP_CATALOG.md).
+
+## Contributing
+
+Please keep new entries consistent with the repo's Docker Compose + `x-casaos` metadata style and test on CasaOS/ZimaOS before opening a PR.

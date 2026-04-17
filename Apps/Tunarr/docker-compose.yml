@@ -1,0 +1,36 @@
+name: tunarr
+services:
+  tunarr:
+    image: ghcr.io/tunarr/tunarr:v0.22.2
+    container_name: tunarr
+    restart: unless-stopped
+    ports:
+      - target: 8000
+        published: "8000"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+x-casaos:
+  architectures: [amd64, arm64]
+  main: tunarr
+  author: AdultOS AppStore
+  category: Media
+  developer: Tunarr
+  icon: https://tunarr.com/favicon.ico
+  title:
+    en_US: Tunarr
+  tagline:
+    en_US: Recommended pseudo-TV channel server for new installs.
+  description:
+    en_US: |
+      Tunarr builds live channels from Jellyfin/Plex libraries, exposes HDHomeRun-compatible tuners, and provides M3U/XMLTV outputs for IPTV-style playback.
+
+      Best for: modern pseudo-TV channel workflows.
+      Pairs well with: Jellyfin, Stash.
+      Role: Core.
+  port_map: "8000"
+  index: /

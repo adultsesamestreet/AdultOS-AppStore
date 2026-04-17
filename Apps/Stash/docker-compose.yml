@@ -1,0 +1,49 @@
+name: stash
+services:
+  stash:
+    image: stashapp/stash:v0.28.1
+    container_name: stash
+    restart: unless-stopped
+    ports:
+      - target: 9999
+        published: "9999"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /root/.stash
+      - type: bind
+        source: /DATA/Media
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/metadata
+        target: /metadata
+      - type: bind
+        source: /DATA/AppData/$AppID/cache
+        target: /cache
+      - type: bind
+        source: /DATA/AppData/$AppID/blobs
+        target: /blobs
+      - type: bind
+        source: /DATA/AppData/$AppID/generated
+        target: /generated
+x-casaos:
+  architectures: [amd64, arm64]
+  main: stash
+  author: AdultOS AppStore
+  category: Media
+  developer: Stash
+  icon: https://raw.githubusercontent.com/stashapp/CommunityScripts/master/assets/icons/stash.png
+  title:
+    en_US: Stash
+  tagline:
+    en_US: Deep metadata browser and library manager for performer- and tag-driven browsing.
+  description:
+    en_US: |
+      Stash is the deep adult library layer for scene-level organization, rich tags, performer/studio exploration, and metadata-driven browsing.
+
+      Best for: primary adult library management and discovery.
+      Pairs well with: Whisparr, TPDB Namer, tinyMediaManager (TPDB Edition), Tunarr.
+      Role: Core.
+  port_map: "9999"
+  index: /

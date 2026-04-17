@@ -1,0 +1,33 @@
+name: unpackerr
+services:
+  unpackerr:
+    image: ghcr.io/unpackerr/unpackerr:0.14.5
+    container_name: unpackerr
+    restart: unless-stopped
+    environment:
+      TZ: $TZ
+      UN_DEBUG: "false"
+      UN_LOG_FILE: /config/unpackerr.log
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  architectures: [amd64, arm64]
+  main: unpackerr
+  author: AdultOS AppStore
+  category: Utilities
+  developer: Unpackerr
+  title: { en_US: Unpackerr }
+  tagline:
+    en_US: Extraction helper service for Arr-style media workflows.
+  description:
+    en_US: |
+      Unpackerr watches completed downloads and extraction queues so Arr apps can import clean files without manual archive handling.
+
+      Best for: automated post-download extraction.
+      Pairs well with: Whisparr, Sonarr, Radarr, Lidarr, SABnzbd, qBittorrent-nox.
+      Role: Core utility.
