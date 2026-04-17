@@ -1,0 +1,42 @@
+name: unmanic
+services:
+  unmanic:
+    image: josh5/unmanic:0.2.8
+    container_name: unmanic
+    restart: unless-stopped
+    ports:
+      - target: 8888
+        published: "8888"
+        protocol: tcp
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /library
+      - type: bind
+        source: /DATA/AppData/$AppID/cache
+        target: /tmp/unmanic
+x-casaos:
+  architectures: [amd64, arm64]
+  main: unmanic
+  author: AdultOS AppStore
+  category: Media
+  developer: Unmanic
+  title: { en_US: Unmanic }
+  tagline:
+    en_US: Set-and-forget background optimiser for media libraries.
+  description:
+    en_US: |
+      Unmanic provides plugin-driven background optimization with an easy setup flow, ideal for users who want automated cleanup without building complex pipelines.
+
+      Best for: simple ongoing library optimization.
+      Pairs well with: Jellyfin, Tdarr, FileFlows.
+      Role: Optional.
+  port_map: "8888"
+  index: /
