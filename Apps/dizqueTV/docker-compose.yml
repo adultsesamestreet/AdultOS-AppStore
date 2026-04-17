@@ -1,0 +1,34 @@
+name: dizquetv
+services:
+  dizquetv:
+    image: vexorian/dizquetv:1.5.2
+    container_name: dizquetv
+    restart: unless-stopped
+    ports:
+      - target: 8000
+        published: "8001"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /home/node/app/.dizquetv
+x-casaos:
+  architectures: [amd64, arm64]
+  main: dizquetv
+  author: AdultOS AppStore
+  category: Media
+  developer: dizqueTV
+  icon: https://raw.githubusercontent.com/vexorian/dizquetv/main/resources/images/dizquetv.png
+  title:
+    en_US: dizqueTV
+  tagline:
+    en_US: Legacy pseudo-TV option for Plex-heavy setups.
+  description:
+    en_US: |
+      dizqueTV is an optional pseudo-TV channel server for users maintaining older Plex-centric workflows. Tunarr is recommended for new installs.
+
+      Best for: existing dizqueTV users and Plex-focused channels.
+      Pairs well with: Plex and legacy channel lineups.
+      Role: Optional.
+  port_map: "8001"
+  index: /

@@ -1,0 +1,49 @@
+name: tinymediamanager_tpdb
+services:
+  tinymediamanager-tpdb:
+    build:
+      context: ./image
+    image: adultos/tinymediamanager-tpdb:5.2.17
+    container_name: tinymediamanager-tpdb
+    restart: unless-stopped
+    ports:
+      - target: 4000
+        published: "4000"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      TPDB_API_KEY: ""
+      TMM_FETCH_TPDB_ON_START: "true"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/Media
+        target: /media
+      - type: bind
+        source: /DATA/AppData/$AppID/addons
+        target: /app/addons
+x-casaos:
+  architectures: [amd64]
+  main: tinymediamanager-tpdb
+  author: AdultOS AppStore
+  category: Media
+  developer: tinyMediaManager + ThePornDB
+  title:
+    en_US: tinyMediaManager (TPDB Edition)
+  tagline:
+    en_US: Custom tinyMediaManager build with bundled TPDB scraper addon.
+  description:
+    en_US: |
+      A custom tinyMediaManager entry with the ThePornDB scraper plugin bundled for adult metadata workflows. Use it to manage posters, NFO files, and local metadata for adult libraries.
+
+      The TPDB plugin is pre-installed under /app/addons. On first run, open Settings → Movies → Scrapers, enable TPDB, and add your own API key. The TPDB API key field is intentionally blank by default.
+
+      Persistent settings are stored in /data, and media libraries should be mounted under /media/.... Built for x86_64 tinyMediaManager Docker deployments.
+
+      Best for: metadata enrichment and deterministic library cleanup.
+      Pairs well with: TPDB Namer, Stash, Jellyfin.
+      Role: Core.
+  port_map: "4000"
+  index: /

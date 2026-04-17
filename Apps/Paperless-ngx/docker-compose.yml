@@ -1,0 +1,64 @@
+name: paperless_ngx
+services:
+  redis:
+    image: docker.io/library/redis:7.4.2-alpine
+    restart: unless-stopped
+  db:
+    image: docker.io/library/postgres:16.8-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: paperless
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql/data
+  paperless:
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.18.3
+    container_name: paperless-ngx
+    depends_on: [redis, db]
+    restart: unless-stopped
+    ports:
+      - target: 8000
+        published: "8010"
+        protocol: tcp
+    environment:
+      PAPERLESS_REDIS: redis://redis:6379
+      PAPERLESS_DBHOST: db
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: paperless
+      PAPERLESS_URL: http://localhost:8010
+      PAPERLESS_TIME_ZONE: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /usr/src/paperless/data
+      - type: bind
+        source: /DATA/AppData/$AppID/media
+        target: /usr/src/paperless/media
+      - type: bind
+        source: /DATA/AppData/$AppID/export
+        target: /usr/src/paperless/export
+      - type: bind
+        source: /DATA/AppData/$AppID/consume
+        target: /usr/src/paperless/consume
+x-casaos:
+  architectures: [amd64, arm64]
+  main: paperless
+  author: AdultOS AppStore
+  category: Documents
+  developer: Paperless-ngx
+  title: { en_US: Paperless-ngx }
+  tagline:
+    en_US: Document ingestion and archival server for self-hosted workflows.
+  description:
+    en_US: |
+      Paperless-ngx captures, OCRs, tags, and archives documents with a web interface and automation-friendly consume folder.
+
+      Best for: digitizing and organizing personal/business records.
+      Pairs well with: Syncthing, Home Assistant automations.
+      Role: Adjacent Utility.
+  port_map: "8010"
+  index: /

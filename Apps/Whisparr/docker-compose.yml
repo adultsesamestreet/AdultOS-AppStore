@@ -1,0 +1,59 @@
+name: whisparr
+services:
+  whisparr:
+    image: ghcr.io/thespad/whisparr:latest
+    container_name: whisparr
+    restart: unless-stopped
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    ports:
+      - target: 6969
+        published: "6969"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /media
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      ports:
+        - container: "6969"
+          description:
+            en_US: Whisparr Web UI
+      volumes:
+        - container: /config
+          description:
+            en_US: Whisparr configuration and database
+        - container: /media
+          description:
+            en_US: Library root for imports
+        - container: /downloads
+          description:
+            en_US: Completed download path
+x-casaos:
+  architectures: [amd64, arm64]
+  main: whisparr
+  author: AdultOS AppStore
+  category: Media
+  developer: Whisparr
+  icon: https://raw.githubusercontent.com/Whisparr/Whisparr/develop/Logo/256.png
+  title:
+    en_US: Whisparr
+  tagline:
+    en_US: Adult acquisition manager for Usenet and BitTorrent workflows.
+  description:
+    en_US: |
+      Whisparr is the adult-oriented acquisition manager in the Arr-style pipeline. It tracks wanted content, automates grabs from indexers and download clients, and imports into your library with structured naming rules.
+
+      Best for: automated adult acquisition.
+      Pairs well with: Prowlarr, SABnzbd, qBittorrent-nox, Unpackerr.
+      Role: Core.
+  port_map: "6969"
+  index: /
