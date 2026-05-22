@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Neon glow filter -->
+    <filter id="neonglow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Vibrant neon pink to green gradient -->
+    <linearGradient id="triangleGradient" x1="50%" y1="20%" x2="75%" y2="85%" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#FF00FF"/>
+      <stop offset="45%" stop-color="#FF1493"/>
+      <stop offset="100%" stop-color="#00FF9F"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Dark rounded background -->
+  <rect 
+    x="0" y="0" width="512" height="512" 
+    rx="108" ry="108" 
+    fill="#0A0A0F" />
+  
+  <!-- Large outer triangle with glow -->
+  <path 
+    d="M256 118 L405 385 L107 385 Z" 
+    fill="url(#triangleGradient)" 
+    filter="url(#neonglow)" />
+  
+  <!-- Middle triangle (dark cutout) -->
+  <path 
+    d="M256 172 L375 355 L137 355 Z" 
+    fill="#0A0A0F" />
+  
+  <!-- Small inner triangle with glow -->
+  <path 
+    d="M256 215 L345 325 L167 325 Z" 
+    fill="url(#triangleGradient)" 
+    filter="url(#neonglow)" />
+</svg>
